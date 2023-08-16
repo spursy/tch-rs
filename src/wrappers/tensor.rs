@@ -659,6 +659,7 @@ impl Tensor {
             device.c_int(),
         ));
         println!("******* tch-rs ******------ load_multi_with_device ----- 44444");
+        println!("-------+++++++++******** {:?}", v);
         Ok(v)
     }
 
