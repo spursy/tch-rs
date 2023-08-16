@@ -174,11 +174,13 @@ impl VarStore {
         &self,
         path: T,
     ) -> Result<HashMap<String, Tensor>, TchError> {
+        println!("******* tch-rs ******------ named_tensors ----- 1111");
         let named_tensors = match path.as_ref().extension().and_then(|x| x.to_str()) {
             Some("bin") | Some("pt") => Tensor::loadz_multi_with_device(&path, self.device),
             Some("safetensors") => Tensor::read_safetensors(path),
             Some(_) | None => Tensor::load_multi_with_device(&path, self.device),
         };
+        println!("******* tch-rs ******------ named_tensors ----- 2222");
         Ok(named_tensors?.into_iter().collect())
     }
 
@@ -192,6 +194,7 @@ impl VarStore {
 
     fn load_internal<T: AsRef<std::path::Path>>(&mut self, path: T) -> Result<(), TchError> {
         println!("******* tch-rs ******--------------- 1111");
+        println!("******* tch-rs ******--------------- 1111, path: {:?}", path.as_ref());
         let named_tensors = self.named_tensors(&path)?;
         println!("******* tch-rs ******--------------- 2222");
         let mut variables = self.variables_.lock().unwrap();
