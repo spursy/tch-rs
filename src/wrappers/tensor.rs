@@ -22,9 +22,13 @@ pub struct Tensor {
 unsafe impl Send for Tensor {}
 
 pub extern "C" fn add_callback(data: *mut c_void, name: *const c_char, c_tensor: *mut C_tensor) {
+    println!("******************** 1111");
     let name = unsafe { std::ffi::CStr::from_ptr(name).to_str().unwrap() };
+    println!("******************** 2222");
     let name = name.replace('|', ".");
+    println!("******************** 3333");
     let v: &mut Vec<(String, Tensor)> = unsafe { &mut *(data as *mut Vec<(String, Tensor)>) };
+    println!("******************** 4444");
     v.push((name, Tensor { c_tensor }))
 }
 
