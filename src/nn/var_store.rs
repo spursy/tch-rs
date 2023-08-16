@@ -176,9 +176,18 @@ impl VarStore {
     ) -> Result<HashMap<String, Tensor>, TchError> {
         println!("******* tch-rs ******------ named_tensors ----- 1111");
         let named_tensors = match path.as_ref().extension().and_then(|x| x.to_str()) {
-            Some("bin") | Some("pt") => Tensor::loadz_multi_with_device(&path, self.device),
-            Some("safetensors") => Tensor::read_safetensors(path),
-            Some(_) | None => Tensor::load_multi_with_device(&path, self.device),
+            Some("bin") | Some("pt") => {
+                println!("******* tch-rs ******------ named_tensors ----- 1111.11111");
+                Tensor::loadz_multi_with_device(&path, self.device)
+            },
+            Some("safetensors") => {
+                println!("******* tch-rs ******------ named_tensors ----- 1111.22222");
+                Tensor::read_safetensors(path)
+            },
+            Some(_) | None => {
+                println!("******* tch-rs ******------ named_tensors ----- 1111.33333");
+                Tensor::load_multi_with_device(&path, self.device)
+            },
         };
         println!("******* tch-rs ******------ named_tensors ----- 2222");
         Ok(named_tensors?.into_iter().collect())
