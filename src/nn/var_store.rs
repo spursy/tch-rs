@@ -191,8 +191,11 @@ impl VarStore {
     }
 
     fn load_internal<T: AsRef<std::path::Path>>(&mut self, path: T) -> Result<(), TchError> {
+        println!("******* tch-rs ******--------------- 1111");
         let named_tensors = self.named_tensors(&path)?;
+        println!("******* tch-rs ******--------------- 2222");
         let mut variables = self.variables_.lock().unwrap();
+        println!("******* tch-rs ******--------------- 3333");
         for (name, var) in variables.named_variables.iter_mut() {
             match named_tensors.get(name) {
                 Some(src) => crate::no_grad(|| {
@@ -207,6 +210,7 @@ impl VarStore {
                 }
             }
         }
+        println!("******* tch-rs ******--------------- 4444");
         Ok(())
     }
 
@@ -217,6 +221,7 @@ impl VarStore {
     /// variables stored in the var-store is not changed, only the values
     /// for these tensors are modified.
     pub fn load<T: AsRef<std::path::Path>>(&mut self, path: T) -> Result<(), TchError> {
+        println!("******* tch-rs ******--------------- device is {:?}", self.device);
         if self.device != Device::Mps {
             self.load_internal(path)
         } else {
