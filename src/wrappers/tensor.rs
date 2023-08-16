@@ -647,14 +647,18 @@ impl Tensor {
         path: T,
         device: Device,
     ) -> Result<Vec<(String, Tensor)>, TchError> {
+        println!("******* tch-rs ******------ load_multi_with_device ----- 1111");
         let path = path_to_cstring(path)?;
+        println!("******* tch-rs ******------ load_multi_with_device ----- 2222");
         let mut v: Vec<(String, Tensor)> = vec![];
+        println!("******* tch-rs ******------ load_multi_with_device ----- 3333");
         unsafe_torch_err!(at_load_callback_with_device(
             path.as_ptr(),
             &mut v as *mut _ as *mut c_void,
             add_callback,
             device.c_int(),
         ));
+        println!("******* tch-rs ******------ load_multi_with_device ----- 44444");
         Ok(v)
     }
 
